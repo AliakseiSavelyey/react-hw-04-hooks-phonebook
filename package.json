@@ -1,8 +1,8 @@
 {
-  "name": "react-hw-03-phonebook",
+  "name": "react-hw-04-hooks-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AliakseiSavelyey.github.io/react-hw-03-phonebook",
+  "homepage": "https://AliakseiSavelyey.github.io/react-hw-04-hooks-phonebook",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
@@ -45,10 +45,14 @@
   },
   "devDependencies": {
     "eslint": "^8.34.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
     "prettier": "^2.8.4"
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix",
-    "*.{js,css,md,scss,jsx}": "prettier --write"
+    "*.{js,css,md,scss,jsx}": "prettier --write",
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
