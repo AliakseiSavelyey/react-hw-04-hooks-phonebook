@@ -1,24 +1,23 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Form from 'components/Form';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
 
 export default function App() {
   const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('')
-  
- 
+  const [filter, setFilter] = useState('');
+
   const fromSubmitHandler = contact => {
     if (contacts.find(({ name }) => name === contact.name)) {
       alert(`${contact.name} is already in contacts`);
       return;
     }
-    contacts = [...contacts, contact];
-    this.setState({ contacts });
+    // contacts = [...contacts, contact];
+    setContacts(contacts);
   };
 
   const handleFilter = filter => {
-    this.setState({ filter });
+    setFilter(filter);
   };
 
   const handleContactSearch = () => {
@@ -28,41 +27,41 @@ export default function App() {
   };
 
   const deleteContact = id => {
-    this.setState(prevstate => {
+    setContacts(prevstate => {
       return {
         contacts: prevstate.contacts.filter(contact => contact.id !== id),
       };
     });
   };
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
+  // componentDidMount() {
+  //   const contacts = localStorage.getItem('contacts');
+  //   const parsedContacts = JSON.parse(contacts);
 
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
+  //   if (parsedContacts) {
+  //     setContacts({ contacts: parsedContacts });
+  //   }
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (contacts !== prevState.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(contacts));
+  //   }
+  // }
 
- 
-    return (
-      <div>
-        <Form addnewcontact={fromSubmitHandler()} />
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-        <Filter searchContact={handleFilter()} value={filter} />
-        <ContactList
-          searchContact={handleContactSearch()}
-          deleteContact={deleteContact()}
-        />
-      </div>
-    );
-  
+  return (
+    <div>
+      <Form addnewcontact={fromSubmitHandler} />
+
+      <Filter searchContact={handleFilter} value={filter} />
+      <ContactList
+        searchContact={handleContactSearch()}
+        deleteContact={deleteContact}
+      />
+    </div>
+  );
 }
-
-

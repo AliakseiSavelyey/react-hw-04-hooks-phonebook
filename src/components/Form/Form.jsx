@@ -28,15 +28,15 @@ export default function Form({ addnewcontact }) {
   const handleSubmit = e => {
     e.preventDefault();
     addnewcontact();
-    reset();
+    // reset();
   };
 
-  const reset = () => {
-    this.setState({
-      name: '',
-      number: '',
-    });
-  };
+  // const reset = () => {
+  //   this.setState({
+  //     name: '',
+  //     number: '',
+  //   });
+  // };
 
   return (
     <form onSubmit={handleSubmit} className="ContactForm">
