@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ContactList.scss';
 
-const ContactList = ({ searchContact, deleteContact }) => {
+export default function ContactList({ searchContact, deleteContact }) {
   return (
     <ul>
       {searchContact.map(({ id, name, number }) => {
         return (
-          <li className="ContactList-item">
+          <li key={id} className="ContactList-item">
             <p className="ContactList-each">
               - {name}: {number}
             </p>
@@ -23,7 +23,7 @@ const ContactList = ({ searchContact, deleteContact }) => {
       })}
     </ul>
   );
-};
+}
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -34,5 +34,3 @@ ContactList.propTypes = {
     }),
   ),
 };
-
-export default ContactList;

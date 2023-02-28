@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { nanoid } from 'nanoid';
 import Form from 'components/Form';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
@@ -7,13 +8,16 @@ export default function App() {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
-  const fromSubmitHandler = contact => {
-    if (contacts.find(({ name }) => name === contact.name)) {
-      alert(`${contact.name} is already in contacts`);
-      return;
+  const fromSubmitHandler = ({ number, name }) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    if (contacts.some(contact => name === contact.name)) {
+      return alert(`${contact.name} is already in contacts`);
     }
-    // contacts = [...contacts, contact];
-    setContacts(contacts);
+    setContacts([contact, ...contacts]);
   };
 
   const handleFilter = filter => {
@@ -34,28 +38,13 @@ export default function App() {
     });
   };
 
-  // componentDidMount() {
-  //   const contacts = localStorage.getItem('contacts');
-  //   const parsedContacts = JSON.parse(contacts);
-
-  //   if (parsedContacts) {
-  //     setContacts({ contacts: parsedContacts });
-  //   }
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(contacts));
-  //   }
-  // }
-
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   return (
     <div>
-      <Form addnewcontact={fromSubmitHandler} />
+      <Form onSubmit={fromSubmitHandler} />
 
       <Filter searchContact={handleFilter} value={filter} />
       <ContactList

@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import shortid from 'shortid';
 import './Form.scss';
 
-export default function Form({ addnewcontact }) {
+export default function Form(qwe) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
-  const nameInputId = shortid.generate();
-  const numberInputId = shortid.generate();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -27,21 +23,19 @@ export default function Form({ addnewcontact }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addnewcontact();
-    // reset();
+    qwe.onSubmit({ name, number });
+    reset();
   };
 
-  // const reset = () => {
-  //   this.setState({
-  //     name: '',
-  //     number: '',
-  //   });
-  // };
+  const reset = () => {
+    setName('');
+    setNumber('');
+  };
 
   return (
     <form onSubmit={handleSubmit} className="ContactForm">
       <h1 className="ContactForm-title">Phonebook</h1>
-      <label htmlFor={nameInputId} className="ContactForm-label">
+      <label className="ContactForm-label">
         Name
         <input
           type="text"
@@ -51,11 +45,10 @@ export default function Form({ addnewcontact }) {
           required
           value={name}
           onChange={handleChange}
-          id={nameInputId}
         />
       </label>
 
-      <label htmlFor={numberInputId} className="ContactForm-label">
+      <label className="ContactForm-label">
         Number
         <input
           type="tel"
@@ -65,7 +58,6 @@ export default function Form({ addnewcontact }) {
           required
           value={number}
           onChange={handleChange}
-          id={numberInputId}
         />
       </label>
 
